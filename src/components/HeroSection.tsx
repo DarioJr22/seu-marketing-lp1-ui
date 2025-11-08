@@ -6,7 +6,8 @@ import { VideoText } from "@/components/ui/video-text";
 import {MarqueeImpl } from '@/components/marqueeImpl';
 
 interface HeroSectionProps {
-  onOpenScheduleModal: () => void;
+  onOpenScheduleModal: () => void,
+  urlStorage?: string;
 }
 
 const rotatingPhrases = [
@@ -17,13 +18,14 @@ const rotatingPhrases = [
   "merece ter uma presença digital de impacto?"
 ];
 
-export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
+export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProps) {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
 
   // Typewriter effect
   useEffect(() => {
@@ -59,6 +61,7 @@ export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
   }, []);
 
   return (
+      <>
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
       
      
@@ -66,17 +69,12 @@ export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
       <div className="absolute inset-0 z-10 bg-black/50"></div>
 
       {/* Fallback background caso o vídeo não carregue */}
-      {!isVideoLoaded && (
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]" />
-      )}
+      {!isVideoLoaded }
 
       {/* Content Container - Z-INDEX ALTO */}
       <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 text-center">
         {/* Container com gradiente radial sutil */}
-        <div className="relative bg-black/20 backdrop-blur-sm rounded-3xl p-12"
-             style={{
-               background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 70%, transparent 100%)'
-             }}>
+        <div className="relative bg-black/20 backdrop-blur-sm rounded-3xl p-12">
           {/* Logo */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
@@ -86,9 +84,12 @@ export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
           >
            
 
-            <VideoText src="https://minio.bombatech.com.br/api/v1/buckets/seumarketing/objects/download?prefix=video/video_herosec.webm" fontSize={100}>
+
+                <div className="relative h-[500px] w-full overflow-hidden">
+                              <VideoText src={`${urlStorage}objects/download?prefix=video/video_herosec.webm`}>
                 SEU MARKETING
                 </VideoText>
+</div>
           </motion.div>
 
           {/* Main Headline with TypeWriter */}
@@ -147,13 +148,16 @@ export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
           <StatCard number="200%" label="ROI Médio" />
           <StatCard number="98%" label="Satisfação" />
         </motion.div> */}
-<MarqueeImpl />
+
         </div>
       </div>
         
       {/* Scroll indicator - Z-INDEX MAIS ALTO */}
-      
+     
     </section>
+     <MarqueeImpl />
+   
+     </>
   );
 }
 

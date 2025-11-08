@@ -36,6 +36,7 @@ export default function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [easterEggActivated, setEasterEggActivated] = useState(false);
   const [typedSequence, setTypedSequence] = useState('');
+  const [url, setUrl] = useState(import.meta.env.VITE_MINIO_ENDPOINT );
 
   // Back to top button visibility
   useEffect(() => {

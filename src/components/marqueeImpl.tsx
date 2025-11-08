@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils"
 import { Marquee } from "./ui/marquee"
+import { motion } from 'motion/react';
 
+const urlStorage = import.meta.env.VITE_MINIO_ENDPOINT
 const reviews = [
   {
     name: "Jack",
@@ -66,14 +68,7 @@ const ReviewCard = ({
     >
       <div className="flex flex-row items-center gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
-        <div className="flex flex-col">
-          <figcaption className="text-sm font-medium dark:text-white">
-            {name}
-          </figcaption>
-          <p className="text-xs font-medium dark:text-white/40">{username}</p>
-        </div>
       </div>
-      <blockquote className="mt-2 text-sm">{body}</blockquote>
     </figure>
   )
 }
@@ -81,18 +76,22 @@ const ReviewCard = ({
 export function MarqueeImpl() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <motion.div
+            initial={{ opacity: 0.8, x: 0 }}
+            animate={{ opacity: 0.8, x: 1000 }}
+            transition={{ duration: 20, repeat: Infinity, repeatType: 'mirror', ease: 'linear' }}
+            className="mb-8"
+          >
+         <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
-      <div className="from-background pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r"></div>
-      <div className="from-background pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l"></div>
+        </motion.div>
+
+    
+    
+     
     </div>
   )
 }

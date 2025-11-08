@@ -65,7 +65,7 @@ export function WhatsAppWidget({ onOpenScheduleModal }: WhatsAppWidgetProps) {
         <AnimatePresence>
           {!isOpen && showNotification && (
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               className="absolute right-20 bottom-4 bg-[#1a1a1a] text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap border border-white/10"
@@ -145,11 +145,11 @@ export function WhatsAppWidget({ onOpenScheduleModal }: WhatsAppWidgetProps) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            exit={{ opacity: 0, scale: 0.8, y: -20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="absolute bottom-24 right-0 w-[360px] max-w-[calc(100vw-3rem)] bg-[#1a1a1a] rounded-2xl shadow-2xl overflow-hidden border border-white/10"
+            className="absolute bottom-20 right-0 w-[360px] max-w-[calc(100vw-3rem)] bg-[#1a1a1a] rounded-2xl shadow-2xl overflow-hidden border border-white/10"
             style={{ maxHeight: '500px' }}
           >
             {/* Header */}
