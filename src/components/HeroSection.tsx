@@ -4,6 +4,7 @@ import { Calendar, MessageCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { VideoText } from "@/components/ui/video-text";
 import {MarqueeImpl } from '@/components/marqueeImpl';
+import { Particles } from './ui/particles';
 
 interface HeroSectionProps {
   onOpenScheduleModal: () => void,
@@ -11,11 +12,11 @@ interface HeroSectionProps {
 }
 
 const rotatingPhrases = [
-  "está perdendo vendas para a concorrência?",
-  "investe em marketing sem ver resultados?",
-  "precisa dominar o ambiente digital?",
-  "quer crescer de forma previsível?",
-  "merece ter uma presença digital de impacto?"
+  "perde vendas pra concorrência?",
+  "investe sem ver resultados?",
+  "precisa dominar o digital?",
+  "quer crescer de forma segura?",
+  "merece uma presença forte?"
 ];
 
 export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProps) {
@@ -30,7 +31,7 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
   // Typewriter effect
   useEffect(() => {
     const phrase = rotatingPhrases[currentPhrase];
-    const typingSpeed = isDeleting ? 40 : 80;
+    const typingSpeed = isDeleting ? 10 : 20;
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
@@ -62,7 +63,7 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
 
   return (
       <>
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden ">
       
      
       {/* <source src="https://minio.bombatech.com.br/api/v1/buckets/seumarketing/objects/download?prefix=video/video_herosec.mp4" type="video/mp4" /> */}
@@ -72,24 +73,25 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
       {!isVideoLoaded }
 
       {/* Content Container - Z-INDEX ALTO */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 text-center">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 text-center "
+        style={
+          {
+            display:'flex'
+          }
+        }>
         {/* Container com gradiente radial sutil */}
-        <div className="relative bg-black/20 backdrop-blur-sm rounded-3xl p-12">
+        <div className="relative w-screen  rounded-3xl p-12">
           {/* Logo */}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ duration: 1, type: "spring" }}
-            className="mb-8"
-          >
-           
-
-
-                <div className="relative h-[500px] w-full overflow-hidden">
-                              <VideoText src={`${urlStorage}objects/download?prefix=video/video_herosec.webm`}>
+            className="mb-8">
+            <div className="relative h-[150px] w-full overflow-hidden">
+              <VideoText src={`${urlStorage}objects/download?prefix=video/video_herosec.webm`}>
                 SEU MARKETING
-                </VideoText>
-</div>
+              </VideoText>
+            </div>
           </motion.div>
 
           {/* Main Headline with TypeWriter */}
@@ -99,10 +101,10 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
             transition={{ delay: 0.5, duration: 0.8 }}
             className="mb-8"
           >
-            <h2 className="text-3xl md:text-5xl text-white mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] filter brightness-110">
+            <h2 className="text-3xl md:text-5xl text-white mb-4 drop-shadow-[0_0_15px_rgba(255,250,250,0.3)] filter brightness-110 ">
               Sua empresa{' '}
               <span className="inline-block min-w-[300px] md:min-w-[600px] text-left">
-                <span className="text-[#a78bfa] drop-shadow-[0_0_15px_rgba(167,139,250,0.5)]">{displayedText}</span>
+                <span className="text-[#fff] drop-shadow-[0_0_15px_rgba(255,250,250,0.5)]">{displayedText}</span>
                 <span className={`inline-block w-1 h-8 md:h-12 bg-[#7c3aed] ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} drop-shadow-[0_0_10px_rgba(124,58,237,0.8)]`} />
               </span>
             </h2>
@@ -121,39 +123,35 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
           <Button
             onClick={onOpenScheduleModal}
             size="lg"
-            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_40px_rgba(124,58,237,0.6)] transition-all duration-300 hover:scale-105 text-lg px-8 py-6 animate-pulse"
+            className="hover:shadow-[0_0_40px_rgba(255,250,250,0.6)] transition-all duration-300 hover:scale-105 text-lg px-8 py-6 animate-pulse"
           >
             <Calendar className="mr-2 h-5 w-5" />
             Agendar Horário Gratuito
           </Button>
+          
+
           <Button
-            onClick={() => window.open('https://wa.me/5581991497521?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20conhecer%20os%20serviços', '_blank')}
+            type="button"
             size="lg"
+            onClick={() => window.open('https://wa.me/5581991497521?text=Olá!%20Gostaria%20de%20agendar%20uma%20consultoria', '_blank')}
             variant="outline"
-            className="border-2 border-[#7c3aed] text-[#7c3aed] hover:bg-[#7c3aed] hover:text-white transition-all duration-300 text-lg px-8 py-6"
+            className="border-green-500 text-green-500 hover:bg-green-500 hover:shadow-[0_0_40px_rgba(0,128,0,0.6)] hover:text-white px-8 py-6 h-12 w-64 transition-all duration-300 hover:scale-105 text-lg px-8 py-6 animate-pulse"
           >
-            <MessageCircle className="mr-2 h-5 w-5" />
-            Falar no WhatsApp Agora
+            Prefiro WhatsApp Direto
           </Button>
         </motion.div>
-
-        {/* Stats
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
-        >
-          <StatCard number="500+" label="Empresas Atendidas" />
-          <StatCard number="200%" label="ROI Médio" />
-          <StatCard number="98%" label="Satisfação" />
-        </motion.div> */}
-
+ 
         </div>
       </div>
         
       {/* Scroll indicator - Z-INDEX MAIS ALTO */}
-     
+ <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={80}
+        color={'#fff'}
+        refresh
+      />    
     </section>
      <MarqueeImpl />
    

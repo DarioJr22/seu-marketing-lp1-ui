@@ -17,6 +17,7 @@ import { ScheduleModal } from './components/ScheduleModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ScrollProgress } from "@/components/ui/scroll-progress"
 
 
 ///
@@ -69,7 +70,6 @@ export default function App() {
 
   const activateEasterEgg = () => {
     setEasterEggActivated(true);
-    document.body.style.transform = 'rotateY(360deg)';
     document.body.style.transition = 'transform 2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
     
     // Create confetti effect
@@ -115,7 +115,7 @@ export default function App() {
       <Header onOpenScheduleModal={() => setIsScheduleModalOpen(true)} />
       
       <main>
-        <HeroSection onOpenScheduleModal={() => setIsScheduleModalOpen(true)} />
+        <HeroSection onOpenScheduleModal={() => setIsScheduleModalOpen(true)} urlStorage={url} />
         <ProblemsSection />
         <ServicesSection />
         <PortfolioSection />
@@ -169,17 +169,9 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <ScrollProgress />
 
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] origin-left z-50"
-        style={{
-          scaleX: 0,
-        }}
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: false, amount: 0 }}
-      />
+      
 
       {/* Confetti Animation CSS */}
       <style>{`

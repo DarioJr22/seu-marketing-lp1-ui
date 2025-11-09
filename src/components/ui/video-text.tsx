@@ -71,7 +71,7 @@ export function VideoText({
   muted = true,
   loop = true,
   preload = "auto",
-  fontSize = 20,
+  fontSize = 11,
   fontWeight = "bold",
   textAnchor = "middle",
   dominantBaseline = "middle",

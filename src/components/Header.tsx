@@ -78,7 +78,7 @@ export function Header({ onOpenScheduleModal }: HeaderProps) {
             <div className="hidden md:block">
               <Button
                 onClick={onOpenScheduleModal}
-                className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] transition-all"
+                className=" hover:shadow-[0_0_20px_rgba(255,250,250,0.5)] transition-all"
               >
                 <Calendar className="w-4 h-4 mr-2" />
                 Agendar Consultoria

@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils"
 import { Marquee } from "./ui/marquee"
 import { motion } from 'motion/react';
+import { url } from "inspector";
 
 const urlStorage = import.meta.env.VITE_MINIO_ENDPOINT
+const path = 'objects/download?prefix=parciros/'
 const reviews = [
   {
     name: "Jack",
@@ -46,16 +48,9 @@ const firstRow = reviews.slice(0, reviews.length / 2)
 const secondRow = reviews.slice(reviews.length / 2)
 
 const ReviewCard = ({
-  img,
-  name,
-  username,
-  body,
+  index
 }: {
-  img: string
-  name: string
-  username: string
-  body: string
-}) => {
+  index: number}) => {
   return (
     <figure
       className={cn(
@@ -67,7 +62,7 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="32" height="32" alt="" src={img} />
+        <img className="rounded-full" width="132" height="232" alt="" src={`${urlStorage}${path}parceiro_${index}.png`} />
       </div>
     </figure>
   )
@@ -80,12 +75,11 @@ export function MarqueeImpl() {
             initial={{ opacity: 0.8, x: 0 }}
             animate={{ opacity: 0.8, x: 1000 }}
             transition={{ duration: 20, repeat: Infinity, repeatType: 'mirror', ease: 'linear' }}
-            className="mb-8"
-          >
+            className="mb-8">
          <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
+        {firstRow.map((review, index) => (
+          <ReviewCard key={review.username} index={index} />
+        )).reverse()}
       </Marquee>
         </motion.div>
 
