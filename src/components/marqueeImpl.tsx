@@ -2,6 +2,10 @@ import { cn } from "@/lib/utils"
 import { Marquee } from "./ui/marquee"
 import { motion } from 'motion/react';
 import { url } from "inspector";
+import {
+  ScrollVelocityContainer,
+  ScrollVelocityRow,
+} from "@/components/ui/scroll-based-velocity"
 
 const urlStorage = import.meta.env.VITE_MINIO_ENDPOINT
 const path = 'objects/download?prefix=parciros/'
@@ -71,7 +75,7 @@ const ReviewCard = ({
 export function MarqueeImpl() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <motion.div
+    <motion.div
             initial={{ opacity: 0.8, x: 0 }}
             animate={{ opacity: 0.8, x: 1000 }}
             transition={{ duration: 20, repeat: Infinity, repeatType: 'mirror', ease: 'linear' }}

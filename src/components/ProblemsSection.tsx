@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { TrendingDown, DollarSign, UserCircle, Target, Users, BarChart3 } from 'lucide-react';
 import { Button } from './ui/button';
+import { AuroraText } from './ui/aurora-text';
 
 const problems = [
   {
@@ -52,10 +53,10 @@ export function ProblemsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
+          <h2 className="text-4xl font-bold md:text-5xl text-white mb-4">
             Reconhece algum desses desafios no seu negócio?
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl font-semibold text-gray-400">
             Você não está sozinho. Esses são os problemas mais comuns que impedindo seu crescimento.
           </p>
         </motion.div>
@@ -74,12 +75,12 @@ export function ProblemsSection() {
           className="text-center"
         >
           <p className="text-2xl text-white mb-6">
-            Podemos resolver <span className="text-[#7c3aed]">TODOS</span> esses problemas. Veja como ↓
+            Podemos resolver <AuroraText className='font-bold'>TODOS</AuroraText> esses problemas. Veja como ↓
           </p>
           <Button
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             size="lg"
-            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
+            className="bg-gradient-to-r from-[#000] to-[#000] hover:shadow-[0_0_30px_rgba(255,250,250,0.8)]"
           >
             Ver Soluções Completas
           </Button>
@@ -111,9 +112,9 @@ function ProblemCard({ problem, index }: ProblemCardProps) {
       whileHover={{ y: -8, scale: 1.02 }}
       className="relative group"
     >
-      <div className="h-full p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#7c3aed]/50 transition-all duration-300">
+      <div className="h-full p-8 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#fff]/50 transition-all duration-300">
         {/* Glow effect on hover */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#7c3aed]/0 to-[#7c3aed]/0 group-hover:from-[#7c3aed]/10 group-hover:to-transparent transition-all duration-300 -z-10" />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#fff]/0 to-[#000]/0 group-hover:from-[#fff]/10 group-hover:to-transparent transition-all duration-300 -z-10" />
         
         {/* Icon */}
         <div className="mb-6 relative">

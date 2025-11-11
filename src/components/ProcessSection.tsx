@@ -67,10 +67,10 @@ export function ProcessSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
-            Como Trabalhamos: Processo Transparente e Eficaz
+          <h2 className="text-4xl font-bold md:text-5xl text-white mb-4">
+            Como Trabalhamos: Processos Transparente e Eficaz
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl font-semibold text-gray-400">
             4 etapas simples para transformar seu marketing
           </p>
         </motion.div>
@@ -78,9 +78,7 @@ export function ProcessSection() {
         {/* Timeline */}
         <div className="relative">
           {/* Connection Line - Desktop */}
-          <div className="hidden lg:block absolute top-32 left-0 right-0 h-1 z-0">
-            <div className="h-full bg-gradient-to-r from-[#7c3aed] via-[#ec4899] via-[#f59e0b] to-[#10b981] rounded-full" />
-          </div>
+
 
           {/* Steps */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
@@ -90,9 +88,6 @@ export function ProcessSection() {
           </div>
 
           {/* Mobile Connection Line */}
-          <div className="lg:hidden absolute left-8 top-0 bottom-0 w-1">
-            <div className="h-full bg-gradient-to-b from-[#7c3aed] via-[#ec4899] via-[#f59e0b] to-[#10b981] rounded-full" />
-          </div>
         </div>
       </div>
     </section>

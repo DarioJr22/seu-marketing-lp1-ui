@@ -10,6 +10,7 @@ import {
   Mail,
   Rocket
 } from 'lucide-react';
+import { AuroraText } from './ui/aurora-text';
 
 const services = [
   {
@@ -136,8 +137,8 @@ export function ServicesSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
-            A Solução Completa que Você Precisa Está Aqui
+          <h2 className="text-4xl font-bold md:text-5xl text-white mb-4">
+            A Solução Completa que Você Precisa Está <AuroraText>Aqui</AuroraText>
           </h2>
           <p className="text-xl text-gray-400">
             9 serviços integrados para transformar seu negócio digital
@@ -179,7 +180,7 @@ function ServiceCard({ service, index }: ServiceCardProps) {
       style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Card */}
-      <div className="h-full p-8 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 hover:border-[#7c3aed]/50 transition-all duration-500 relative overflow-hidden">
+      <div className="h-full p-8 rounded-2xl bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 hover:border-[#fff]/50 transition-all duration-500 relative overflow-hidden">
         {/* Glow effect */}
         <div 
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10"
@@ -205,7 +206,7 @@ function ServiceCard({ service, index }: ServiceCardProps) {
         </motion.div>
 
         {/* Content */}
-        <h3 className="text-2xl text-white mb-3 group-hover:text-[#a78bfa] transition-colors">
+        <h3 className="text-2xl text-white mb-3 group-hover:text-[#fff] transition-colors">
           {service.title}
         </h3>
         
@@ -242,7 +243,7 @@ function ServiceCard({ service, index }: ServiceCardProps) {
         </ul>
 
         {/* Hover border effect */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#7c3aed]/30 transition-all duration-500" />
+        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#fff]/30 transition-all duration-500" />
       </div>
     </motion.div>
   );

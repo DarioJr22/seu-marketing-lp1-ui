@@ -2,8 +2,20 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { Play, Instagram, ExternalLink } from 'lucide-react';
 import { Button } from './ui/button';
+import { AuroraText } from './ui/aurora-text';
 
-const portfolioItems = [
+interface Portfolio {
+  type: 'image' | 'video';
+  category: string;
+  title: string;
+  description: string;
+  client: string;
+  results: string;
+  url?: string;
+}
+
+
+const portfolioItems:Portfolio[] = [
   {
     type: 'image',
     category: 'Social Media',
@@ -74,10 +86,10 @@ export function PortfolioSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
-            Nosso Portfolio em Destaque
+          <h2 className="text-4xl font-bold md:text-5xl text-white mb-4">
+            Nosso Portfolio em <AuroraText> Destaque</AuroraText>
           </h2>
-          <p className="text-xl text-gray-400 mb-8">
+          <p className="text-xl font-semibold text-gray-400 mb-8">
             Trabalhos reais que geraram resultados extraordinários
           </p>
 
