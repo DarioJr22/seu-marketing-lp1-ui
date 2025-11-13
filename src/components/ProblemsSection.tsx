@@ -128,7 +128,7 @@ function ProblemCard({ problem, index }: ProblemCardProps) {
         </div>
 
         {/* Content */}
-        <h3 className="text-xl text-white mb-3 group-hover:text-[#a78bfa] transition-colors">
+        <h3 className={`text-xl text-white mb-3 group-hover:text-[${problem.color}] transition-colors font-semibold`}>
           {problem.title}
         </h3>
         <p className="text-gray-400 leading-relaxed">

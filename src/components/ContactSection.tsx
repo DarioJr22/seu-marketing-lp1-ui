@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
+import { AuroraText } from './ui/aurora-text';
 
 const services = [
   'Gestão de Redes Sociais',
@@ -68,8 +69,8 @@ export function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
-            Pronto para Transformar Seu Marketing?
+          <h2 className="text-4xl md:text-5xl text-white mb-4 font-bold">
+            Pronto para Transformar o <AuroraText>Seu Marketing ?</AuroraText>
           </h2>
           <p className="text-xl text-gray-400">
             Escolha a melhor forma de entrar em contato
@@ -118,7 +119,7 @@ export function ContactSection() {
                 { icon: Clock, text: "Seg-Sex: 09h às 18h | Sáb: 09h às 12h" },
                 { icon: Phone, text: "Atendimento 24h pelo WhatsApp" }
               ]}
-              color="#7c3aed"
+              color="#fff"
             />
           </motion.div>
 
@@ -150,7 +151,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Seu nome completo"
-                      className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                      className="bg-[#0a0a0a] border-white/10 focus:border-[#fff] text-white"
                     />
                   </div>
 
@@ -166,7 +167,7 @@ export function ContactSection() {
                       value={formData.whatsapp}
                       onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                       placeholder="(00) 00000-0000"
-                      className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                      className="bg-[#0a0a0a] border-white/10 focus:border-[#fff] text-white"
                     />
                   </div>
 
@@ -182,7 +183,7 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="seu@email.com"
-                      className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                      className="bg-[#0a0a0a] border-white/10 focus:border-[#fff] text-white"
                     />
                   </div>
 
@@ -196,7 +197,7 @@ export function ContactSection() {
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       placeholder="Nome da sua empresa"
-                      className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                      className="bg-[#0a0a0a] border-white/10 focus:border-[#fff] text-white"
                     />
                   </div>
 
@@ -213,8 +214,8 @@ export function ContactSection() {
                           onClick={() => handleServiceToggle(service)}
                           className={`text-left text-xs p-2 rounded-lg border transition-all ${
                             formData.services.includes(service)
-                              ? 'bg-[#7c3aed]/20 border-[#7c3aed] text-white'
-                              : 'bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-[#7c3aed]/50'
+                              ? 'bg-[#fff]/20 border-[#fff] text-white'
+                              : 'bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-[#fff]/50'
                           }`}
                         >
                           {service}
@@ -234,7 +235,7 @@ export function ContactSection() {
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Conte-nos um pouco sobre seu projeto e objetivos..."
                       rows={3}
-                      className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white resize-none"
+                      className="bg-[#0a0a0a] border-white/10 focus:border-[#fff] text-white resize-none"
                     />
                     <div className="text-xs text-gray-500 mt-1">
                       {formData.message.length}/500
@@ -253,7 +254,7 @@ export function ContactSection() {
                       step="500"
                       value={formData.budget}
                       onChange={(e) => setFormData({ ...formData, budget: Number(e.target.value) })}
-                      className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#7c3aed]"
+                      className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#fff]"
                     />
                     <div className="flex justify-between text-xs text-gray-500 mt-1">
                       <span>R$ 500</span>
@@ -265,7 +266,7 @@ export function ContactSection() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] h-14 text-lg"
+                    className="w-full bg-gradient-to-r from-[#0d0d0d] via-[#3c3c3c] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.5)] h-14 text-lg"
                   >
                     {isSubmitting ? (
                       <>Enviando...</>
@@ -284,7 +285,7 @@ export function ContactSection() {
                       <span>LGPD Compliant</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-[#7c3aed]" />
+                      <Clock className="w-4 h-4 text-[#fff]" />
                       <span>Resposta em até 2h</span>
                     </div>
                     <div className="flex items-center gap-1">
@@ -308,7 +309,7 @@ function ContactCard({ icon: Icon, title, subtitle, content, badge, action, butt
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#7c3aed]/50 transition-all group"
+      className="p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#fff]/50 transition-all group"
     >
       <div className="flex items-start gap-4">
         <div

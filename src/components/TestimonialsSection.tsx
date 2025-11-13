@@ -1,5 +1,7 @@
 import { motion } from 'motion/react';
 import { Star, Quote } from 'lucide-react';
+import { AuroraText } from './ui/aurora-text';
+import { Meteors } from './ui/meteors';
 
 const testimonials = [
   {
@@ -61,7 +63,7 @@ const stats = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#1a0a2e]">
+    <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.div
@@ -71,8 +73,8 @@ export function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
-            Empresas Reais. Resultados Reais. Crescimento Real.
+          <h2 className="text-4xl md:text-5xl text-white mb-4 font-bold">
+            Empresas Reais. Resultados Reais. <AuroraText>Crescimento Real.</AuroraText>
           </h2>
           <p className="text-xl text-gray-400">
             Veja como transformamos desafios em sucessos mensuráveis
@@ -104,7 +106,7 @@ export function TestimonialsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl text-white text-center mb-12"
+          className="text-3xl text-white text-center mb-12 font-bold"
         >
           O Que Nossos Clientes Dizem
         </motion.h3>
@@ -140,10 +142,10 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
       whileHover={{ y: -8 }}
-      className="relative p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#7c3aed]/50 transition-all group"
+      className="relative p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#fff]/50 transition-all group"
     >
       {/* Quote Icon */}
-      <Quote className="absolute top-6 right-6 w-12 h-12 text-[#7c3aed] opacity-20 group-hover:opacity-30 transition-opacity" />
+      <Quote className="absolute top-6 right-6 w-12 h-12 text-[#fff] opacity-20 group-hover:opacity-30 transition-opacity" />
 
       {/* Stars */}
       <div className="flex gap-1 mb-4">
@@ -179,7 +181,8 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
       </div>
 
       {/* Glow effect */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#7c3aed]/0 to-[#7c3aed]/0 group-hover:from-[#7c3aed]/5 group-hover:to-transparent transition-all duration-500 -z-10" />
-    </motion.div>
+    
+     </motion.div>
+
   );
 }

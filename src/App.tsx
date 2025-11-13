@@ -193,12 +193,12 @@ export default function App() {
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #7c3aed;
+          background: #535353ff;
           border-radius: 3px;
         }
 
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #a78bfa;
+          background: #535353ff;
         }
 
         /* Smooth scroll behavior */

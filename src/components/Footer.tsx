@@ -47,7 +47,7 @@ export function Footer() {
             transition={{ duration: 0.5 }}
           >
             <div className="mb-6">
-              <h3 className="text-2xl bg-gradient-to-r from-[#a78bfa] via-[#7c3aed] to-[#5b21b6] bg-clip-text text-transparent">
+              <h3 className="text-2xl bg-gradient-to-r from-[#fff] via-[#535353ff] to-[#5b21b6] bg-clip-text text-transparent">
                 SEU MARKETING
               </h3>
             </div>
@@ -79,7 +79,7 @@ export function Footer() {
               <SocialIcon
                 icon={Mail}
                 href="mailto:contato@seumarketing.com.br"
-                color="#7c3aed"
+                color="#535353ff"
                 label="Email"
               />
             </div>
@@ -98,17 +98,17 @@ export function Footer() {
                 <li key={index}>
                   <a
                     href="#services"
-                    className="text-gray-400 hover:text-[#7c3aed] transition-colors text-sm inline-block relative group"
+                    className="text-gray-400 hover:text-[#535353ff] transition-colors text-sm inline-block relative group"
                   >
                     {service}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#7c3aed] group-hover:w-full transition-all duration-300" />
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#535353ff] group-hover:w-full transition-all duration-300" />
                   </a>
                 </li>
               ))}
               <li>
                 <a
                   href="#services"
-                  className="text-[#7c3aed] hover:text-[#a78bfa] transition-colors text-sm inline-block"
+                  className="text-[#535353ff] hover:text-[#fff] transition-colors text-sm inline-block"
                 >
                   Ver Todos os Serviços →
                 </a>
@@ -129,17 +129,17 @@ export function Footer() {
                 <li key={index}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-[#7c3aed] transition-colors text-sm inline-block relative group"
+                    className="text-gray-400 hover:text-[#535353ff] transition-colors text-sm inline-block relative group"
                   >
                     {link.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#7c3aed] group-hover:w-full transition-all duration-300" />
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#535353ff] group-hover:w-full transition-all duration-300" />
                   </a>
                 </li>
               ))}
               <li>
                 <a
                   href="#contact"
-                  className="text-[#7c3aed] hover:text-[#a78bfa] transition-colors text-sm inline-block"
+                  className="text-[#535353ff] hover:text-[#fff] transition-colors text-sm inline-block"
                 >
                   Agendar Consultoria →
                 </a>
@@ -167,11 +167,11 @@ export function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seu@email.com"
-                  className="bg-[#1a1a1a] border-white/10 focus:border-[#7c3aed] text-white"
+                  className="bg-[#1a1a1a] border-white/10 focus:border-[#535353ff] text-white"
                 />
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_20px_rgba(124,58,237,0.4)]"
+                  className="w-full bg-gradient-to-r from-[#535353ff] to-[#fff] hover:shadow-[0_0_20px_rgba(255,250,250,0.4)]"
                 >
                   Inscrever
                 </Button>
@@ -195,16 +195,16 @@ export function Footer() {
               © 2025 SEU MARKETING. Todos os direitos reservados.
             </div>
             <div className="flex flex-wrap gap-6 text-sm">
-              <a href="#" className="text-gray-500 hover:text-[#7c3aed] transition-colors">
+              <a href="#" className="text-gray-500 hover:text-[#535353ff] transition-colors">
                 Política de Privacidade
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#7c3aed] transition-colors">
+              <a href="#" className="text-gray-500 hover:text-[#535353ff] transition-colors">
                 Termos de Uso
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#7c3aed] transition-colors">
+              <a href="#" className="text-gray-500 hover:text-[#535353ff] transition-colors">
                 Política de Cookies
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#7c3aed] transition-colors">
+              <a href="#" className="text-gray-500 hover:text-[#535353ff] transition-colors">
                 LGPD
               </a>
             </div>

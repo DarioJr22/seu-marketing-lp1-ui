@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Search, Target, Rocket, BarChart } from 'lucide-react';
+import { AuroraText } from './ui/aurora-text';
 
 const steps = [
   {
@@ -68,7 +69,7 @@ export function ProcessSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold md:text-5xl text-white mb-4">
-            Como Trabalhamos: Processos Transparente e Eficaz
+            Como Trabalhamos: <AuroraText>Processos Transparente e Eficaz</AuroraText>
           </h2>
           <p className="text-xl font-semibold text-gray-400">
             4 etapas simples para transformar seu marketing
@@ -118,7 +119,7 @@ function ProcessStep({ step, index }: ProcessStepProps) {
       className="relative"
     >
       {/* Card */}
-      <div className="relative p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#7c3aed]/50 transition-all group">
+      <div className="relative p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#fff]/50 transition-all group">
         {/* Number */}
         <div
           className="absolute -top-6 left-6 w-14 h-14 rounded-full flex items-center justify-center border-4 border-[#0a0a0a] text-2xl z-10"

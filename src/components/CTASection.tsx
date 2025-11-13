@@ -8,7 +8,7 @@ interface CTASectionProps {
 
 export function CTASection({ onOpenScheduleModal }: CTASectionProps) {
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-gradient-to-br from-[#7c3aed] via-[#5b21b6] to-[#1a0a2e]">
+    <section className="relative py-32 px-6 overflow-hidden bg-gradient-to-br from-[#0d0d0d] via-[#3c3c3c] to-[#000]">
       {/* Animated particles background */}
       <div className="absolute inset-0">
         {[...Array(50)].map((_, i) => (
@@ -80,30 +80,31 @@ export function CTASection({ onOpenScheduleModal }: CTASectionProps) {
         </motion.p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-        >
+         {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 1, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+          >
           <Button
             onClick={onOpenScheduleModal}
             size="lg"
-            className="bg-white text-[#7c3aed] hover:bg-white/90 hover:scale-105 transition-all text-lg px-8 py-7 shadow-[0_0_40px_rgba(255,255,255,0.3)]"
+            className="hover:shadow-[0_0_40px_rgba(255,250,250,0.6)] transition-all duration-300 hover:scale-105 text-lg px-8 py-6 "
           >
-            <Calendar className="mr-2 h-6 w-6" />
-            Agendar Minha Consultoria Grátis
+            <Calendar className="mr-2 h-5 w-5" />
+            Agendar Horário Gratuito
           </Button>
           
+
           <Button
-            onClick={() => window.open('https://wa.me/5581991497521?text=Quero%20começar%20agora!', '_blank')}
+            type="button"
             size="lg"
+            onClick={() => window.open('https://wa.me/5581991497521?text=Olá!%20Gostaria%20de%20agendar%20uma%20consultoria', '_blank')}
             variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-[#7c3aed] transition-all text-lg px-8 py-7"
+            className="border-green-500 text-green-500 hover:bg-green-500 hover:shadow-[0_0_40px_rgba(0,128,0,0.6)] hover:text-white px-8 py-6 h-12 w-64 transition-all duration-300 hover:scale-105 text-lg px-8 py-6 a"
           >
-            <MessageCircle className="mr-2 h-6 w-6" />
-            Chamar no WhatsApp
+            Prefiro WhatsApp Direto
           </Button>
         </motion.div>
 

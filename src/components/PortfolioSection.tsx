@@ -76,7 +76,7 @@ export function PortfolioSection() {
     : portfolioItems.filter(item => item.category === activeCategory);
 
   return (
-    <section id="portfolio" className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#1a0a2e]">
+    <section id="portfolio" className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.div
@@ -99,9 +99,9 @@ export function PortfolioSection() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 rounded-full transition-all ${
+                className={`px-6 py-2 rounded-full transition-all cursor-pointer ${
                   activeCategory === category
-                    ? 'bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_0_20px_rgba(124,58,237,0.5)]'
+                    ? 'bg-gradient-to-r from-[#000000] to-[#ffffff] text-white shadow-[0_0_20px_rgba(255,250,250,0.5)]'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
                 }`}
               >
@@ -126,7 +126,7 @@ export function PortfolioSection() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="text-center mt-12"
         >
-          <p className="text-white text-lg mb-6">
+          <p className="text-white text-lg mb-6 font-semibold">
             Quer ver mais trabalhos e bastidores?
           </p>
           <Button
@@ -172,6 +172,7 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed]/30 via-[#ec4899]/20 to-[#f59e0b]/30">
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 opacity-20" style={{
+          //TODO : substituir cores fixas por variáveis de tema e foros
           backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px),
                            repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px)`
         }} />
@@ -201,7 +202,7 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
       >
         {/* Category Badge */}
         <div className="mb-3">
-          <span className="px-3 py-1 bg-[#7c3aed]/80 backdrop-blur-sm text-white text-xs rounded-full">
+          <span className="px-3 py-1 bg-[#fff]/80 backdrop-blur-sm text-black text-xs rounded-full">
             {item.category}
           </span>
         </div>
@@ -218,7 +219,7 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
 
         {/* Results */}
         <div className="flex items-center justify-between">
-          <div className="text-[#a78bfa]">
+          <div className="text-[#fff]">
             {item.results}
           </div>
           <ExternalLink className="w-5 h-5 text-white" />
@@ -227,7 +228,7 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
 
       {/* Border glow on hover */}
       <div className={`absolute inset-0 rounded-2xl border-2 transition-all duration-300 ${
-        isHovered ? 'border-[#7c3aed] shadow-[0_0_30px_rgba(124,58,237,0.5)]' : 'border-transparent'
+        isHovered ? 'border-[#fff] shadow-[0_0_30px_rgba(255,250,250,0.5)]' : 'border-transparent'
       }`} />
     </motion.div>
   );

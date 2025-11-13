@@ -45,7 +45,7 @@ export function FAQSection() {
   };
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#1a0a2e]">
+    <section className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <motion.div
@@ -55,10 +55,10 @@ export function FAQSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl text-white mb-4">
+          <h2 className="text-4xl md:text-5xl text-white mb-4 font-bold">
             Perguntas Frequentes
           </h2>
-          <p className="text-xl text-gray-400">
+          <p className="text-xl text-gray-400 font-semibold">
             Tudo o que você precisa saber sobre nossos serviços
           </p>
         </motion.div>
@@ -101,10 +101,10 @@ function FAQItem({ faq, index, isOpen, onToggle }: FAQItemProps) {
     >
       <button
         onClick={onToggle}
-        className="w-full text-left p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#7c3aed]/50 transition-all"
+        className="w-full text-left p-6 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl hover:border-[#fff]/50 transition-all"
       >
         <div className="flex justify-between items-start gap-4">
-          <h3 className="text-lg text-white group-hover:text-[#a78bfa] transition-colors pr-4">
+          <h3 className="text-lg text-white group-hover:text-[#fff] transition-colors pr-4">
             {faq.question}
           </h3>
           <motion.div
@@ -112,7 +112,7 @@ function FAQItem({ faq, index, isOpen, onToggle }: FAQItemProps) {
             transition={{ duration: 0.3 }}
             className="flex-shrink-0"
           >
-            <ChevronDown className="w-6 h-6 text-[#7c3aed]" />
+            <ChevronDown className="w-6 h-6 text-[#fff]" />
           </motion.div>
         </div>
 

@@ -93,7 +93,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ type: 'spring', duration: 0.5 }}
-                className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-[#7c3aed]/30 rounded-3xl max-w-2xl w-full p-8 shadow-2xl"
+                className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-[#535353ff]/30 rounded-3xl max-w-2xl w-full p-8 shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close button */}
@@ -108,7 +108,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                   <>
                     {/* Header */}
                     <div className="text-center mb-8">
-                      <Calendar className="w-16 h-16 mx-auto mb-4 text-[#7c3aed]" />
+                      <Calendar className="w-16 h-16 mx-auto mb-4 text-[#535353ff]" />
                       <h2 className="text-3xl text-white mb-2">
                         Agende uma Consultoria Gratuita
                       </h2>
@@ -122,7 +122,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                       {/* Name */}
                       <div>
                         <Label htmlFor="name" className="text-white mb-2 flex items-center gap-2">
-                          <User className="w-4 h-4 text-[#7c3aed]" />
+                          <User className="w-4 h-4 text-[#535353ff]" />
                           Nome Completo *
                         </Label>
                         <Input
@@ -131,14 +131,14 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           placeholder="Como podemos te chamar?"
-                          className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                          className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
                         />
                       </div>
 
                       {/* WhatsApp */}
                       <div>
                         <Label htmlFor="whatsapp" className="text-white mb-2 flex items-center gap-2">
-                          <Phone className="w-4 h-4 text-[#7c3aed]" />
+                          <Phone className="w-4 h-4 text-[#535353ff]" />
                           WhatsApp *
                         </Label>
                         <Input
@@ -148,14 +148,14 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                           value={formData.whatsapp}
                           onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                           placeholder="(00) 00000-0000"
-                          className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                          className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
                         />
                       </div>
 
                       {/* Email */}
                       <div>
                         <Label htmlFor="email" className="text-white mb-2 flex items-center gap-2">
-                          <Mail className="w-4 h-4 text-[#7c3aed]" />
+                          <Mail className="w-4 h-4 text-[#535353ff]" />
                           E-mail *
                         </Label>
                         <Input
@@ -165,14 +165,14 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           placeholder="seu@email.com"
-                          className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                          className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
                         />
                       </div>
 
                       {/* Company */}
                       <div>
                         <Label htmlFor="company" className="text-white mb-2 flex items-center gap-2">
-                          <Building2 className="w-4 h-4 text-[#7c3aed]" />
+                          <Building2 className="w-4 h-4 text-[#535353ff]" />
                           Empresa
                         </Label>
                         <Input
@@ -180,14 +180,14 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                           placeholder="Nome da sua empresa"
-                          className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                          className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
                         />
                       </div>
 
                       {/* Services */}
                       <div>
                         <Label className="text-white mb-3 flex items-center gap-2">
-                          <Target className="w-4 h-4 text-[#7c3aed]" />
+                          <Target className="w-4 h-4 text-[#535353ff]" />
                           Área de Interesse
                         </Label>
                         <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
@@ -198,13 +198,13 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                               onClick={() => handleServiceToggle(service)}
                               className={`text-left text-sm p-3 rounded-lg border transition-all ${
                                 formData.selectedServices.includes(service)
-                                  ? 'bg-[#7c3aed]/20 border-[#7c3aed] text-white'
-                                  : 'bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-[#7c3aed]/50'
+                                  ? 'bg-[#535353ff]/20 border-[#535353ff] text-white'
+                                  : 'bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-[#535353ff]/50'
                               }`}
                             >
                               <div className="flex items-center gap-2">
                                 {formData.selectedServices.includes(service) && (
-                                  <Check className="w-4 h-4 text-[#7c3aed]" />
+                                  <Check className="w-4 h-4 text-[#535353ff]" />
                                 )}
                                 <span>{service}</span>
                               </div>
@@ -217,7 +217,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="date" className="text-white mb-2 flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-[#7c3aed]" />
+                            <Calendar className="w-4 h-4 text-[#535353ff]" />
                             Data *
                           </Label>
                           <Input
@@ -227,12 +227,12 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                             value={formData.date}
                             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                             min={new Date().toISOString().split('T')[0]}
-                            className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white"
+                            className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
                           />
                         </div>
                         <div>
                           <Label htmlFor="time" className="text-white mb-2 flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-[#7c3aed]" />
+                            <Clock className="w-4 h-4 text-[#535353ff]" />
                             Horário *
                           </Label>
                           <select
@@ -240,7 +240,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                             required
                             value={formData.time}
                             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                            className="w-full h-10 px-3 rounded-md bg-[#0a0a0a] border border-white/10 focus:border-[#7c3aed] text-white outline-none"
+                            className="w-full h-10 px-3 rounded-md bg-[#0a0a0a] border border-white/10 focus:border-[#535353ff] text-white outline-none"
                           >
                             <option value="">Selecione</option>
                             {timeSlots.map((slot) => (
@@ -263,7 +263,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                           placeholder="Conte-nos um pouco sobre seu projeto e objetivos..."
                           rows={3}
-                          className="bg-[#0a0a0a] border-white/10 focus:border-[#7c3aed] text-white resize-none"
+                          className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white resize-none"
                         />
                       </div>
 
@@ -271,7 +271,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                       <div className="flex gap-4">
                         <Button
                           type="submit"
-                          className="flex-1 bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] h-12"
+                          className="flex-1 bg-gradient-to-r from-[#535353ff] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.3)] h-12"
                         >
                           <Check className="w-5 h-5 mr-2" />
                           Confirmar Agendamento

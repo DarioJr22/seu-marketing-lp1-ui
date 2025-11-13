@@ -105,7 +105,7 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
               Sua empresa{' '}
               <span className="inline-block min-w-[300px] md:min-w-[600px] text-left">
                 <span className="text-[#fff] drop-shadow-[0_0_15px_rgba(255,250,250,0.5)]">{displayedText}</span>
-                <span className={`inline-block w-1 h-8 md:h-12 bg-[#7c3aed] ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} drop-shadow-[0_0_10px_rgba(124,58,237,0.8)]`} />
+                <span className={`inline-block w-1 h-8 md:h-12 bg-[#FFF] ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} drop-shadow-[0_0_10px_rgba(255,250,255,0.8)]`} />
               </span>
             </h2>
             <p className="text-lg font-semibold md:text-xl text-gray-300 max-w-3xl mx-auto drop-shadow-[0_0_10px_rgba(255,255,255,0.2)] filter brightness-105">
@@ -115,7 +115,7 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"

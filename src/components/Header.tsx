@@ -43,7 +43,7 @@ export function Header({ onOpenScheduleModal }: HeaderProps) {
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#0a0a0a]/80 backdrop-blur-md border-b border-[#7c3aed]/20 shadow-lg'
+            ? 'bg-[#0a0a0a]/80 backdrop-blur-md border-b border-[#0a0a0a]/20 shadow-lg'
             : 'bg-transparent'
         }`}
       >
@@ -66,10 +66,10 @@ export function Header({ onOpenScheduleModal }: HeaderProps) {
                   key={index}
                   onClick={() => scrollToSection(link.href)}
                   whileHover={{ y: -2 }}
-                  className="text-white hover:text-[#a78bfa] transition-colors relative group"
+                  className="text-white hover:text-[#fff] transition-colors relative group"
                 >
                   {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#7c3aed] group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#fff] group-hover:w-full transition-all duration-300" />
                 </motion.button>
               ))}
             </nav>
