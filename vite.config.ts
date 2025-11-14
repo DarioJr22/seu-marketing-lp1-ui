@@ -53,9 +53,31 @@
     build: {
       target: 'esnext',
       outDir: 'build',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            animations: ['framer-motion'],
+            icons: ['lucide-react'],
+            ui: ['@radix-ui/react-dialog', '@radix-ui/react-slot', '@radix-ui/react-accordion']
+          }
+        }
+      },
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      sourcemap: false,
+      cssCodeSplit: true
     },
     server: {
       port: 3000,
       open: true,
+      headers: {
+        'Cache-Control': 'public, max-age=31536000'
+      }
     },
   });

@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://seu-marketing.com/sitemap.xml
+
+# Block crawling of admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /.git/
+
+# Allow important files
+Allow: /favicon.ico
+Allow: /robots.txt
+Allow: /sitemap.xml

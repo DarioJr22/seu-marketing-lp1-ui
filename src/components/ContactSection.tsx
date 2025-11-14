@@ -132,12 +132,10 @@ export function ContactSection() {
           >
             {!isSubmitted ? (
               <div className="p-8 bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl">
-                <h3 className="text-2xl text-white mb-2">
+                <h3 className="text-2xl text-white mb-2 font-bold">
                   Ou Preencha e Receba uma Proposta Personalizada
                 </h3>
-                <p className="text-gray-400 mb-6">
-                  Responderemos em até 2 horas úteis
-                </p>
+              
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Name */}
@@ -340,7 +338,7 @@ function ContactCard({ icon: Icon, title, subtitle, content, badge, action, butt
           {buttonText && (
             <Button
               onClick={action}
-              className="w-full mt-2"
+              className="w-full mt-2 cursor-pointer  "
               style={{ backgroundColor: color }}
             >
               {buttonText}

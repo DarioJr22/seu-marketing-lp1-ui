@@ -8,6 +8,8 @@ interface HeaderProps {
 }
 
 export function Header({ onOpenScheduleModal }: HeaderProps) {
+  const urlStorage = import.meta.env.VITE_MINIO_ENDPOINT
+  const path = 'objects/download?prefix=imgs/'
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -56,7 +58,7 @@ export function Header({ onOpenScheduleModal }: HeaderProps) {
               whileTap={{ scale: 0.95 }}
               className="text-2xl bg-gradient-to-r from-[#a78bfa] via-[#7c3aed] to-[#5b21b6] bg-clip-text text-transparent cursor-pointer"
             >
-              SEU MARKETING
+             <img className='bg-white rounded-full' alt="Seu Marketing Logo" src={`${urlStorage}${path}logo_sm.svg`} width={75} height={75} />
             </motion.button>
 
             {/* Desktop Navigation */}

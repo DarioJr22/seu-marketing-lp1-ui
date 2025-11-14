@@ -52,7 +52,7 @@ export function CTASection({ onOpenScheduleModal }: CTASectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-4xl md:text-6xl text-white mb-6"
+          className="text-4xl md:text-6xl text-white mb-6 font-bold leading-tight" 
         >
           Chega de Perder Clientes Para a Concorrência
         </motion.h2>
@@ -63,7 +63,7 @@ export function CTASection({ onOpenScheduleModal }: CTASectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-xl md:text-2xl text-white/90 mb-4"
+          className="text-xl md:text-2xl text-white/90 mb-4 font-semibold leading-relaxed"
         >
           Comece Hoje Mesmo a Dominar o Marketing Digital do Seu Mercado
         </motion.p>
