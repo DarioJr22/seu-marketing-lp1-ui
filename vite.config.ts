@@ -51,25 +51,18 @@
       },
     },
     build: {
-      target: 'esnext',
+      target: 'es2015',
       outDir: 'build',
       rollupOptions: {
         output: {
           manualChunks: {
             vendor: ['react', 'react-dom'],
-            animations: ['framer-motion'],
-            icons: ['lucide-react'],
-            ui: ['@radix-ui/react-dialog', '@radix-ui/react-slot', '@radix-ui/react-accordion']
+            animations: ['motion'],
+            icons: ['lucide-react']
           }
         }
       },
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true
-        }
-      },
+      minify: 'esbuild',
       sourcemap: false,
       cssCodeSplit: true
     },

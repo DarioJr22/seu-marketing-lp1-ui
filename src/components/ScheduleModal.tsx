@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Calendar, Clock, User, Mail, Phone, Building2, Target, Check } from 'lucide-react';
+import { X, Calendar, Clock, User, Mail, Phone, Building2, Target, Check, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
+import { api } from '../services/api';
 
 interface ScheduleModalProps {
   isOpen: boolean;
@@ -26,7 +27,9 @@ const services = [
 ];
 
 export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
-  const [step, setStep] = useState<'form' | 'success'>('form');
+  const [step, setStep] = useState<'form' | 'success' | 'error'>('form');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     whatsapp: '',
@@ -38,14 +41,61 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would integrate with backend/Google Calendar API
-    console.log('Agendamento:', formData);
-    setStep('success');
-    setTimeout(() => {
-      window.open(`https://wa.me/5581991497521?text=Olá!%20Acabei%20de%20agendar%20uma%20consultoria%20pelo%20site.`, '_blank');
-    }, 2000);
+    
+    // Validação básica
+    if (!formData.name || !formData.email || !formData.whatsapp) {
+      setErrorMessage('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    if (!formData.date || !formData.time) {
+      setErrorMessage('Por favor, selecione data e horário.');
+      return;
+    }
+
+    if (formData.selectedServices.length === 0) {
+      setErrorMessage('Por favor, selecione ao menos um serviço.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const payload = {
+        nome: formData.name,
+        email: formData.email,
+        telefone: formData.whatsapp,
+        empresa: formData.company || undefined,
+        mensagem: formData.message || undefined,
+        servicos: formData.selectedServices,
+        orcamentoMin: 0,
+        orcamentoMax: 50000,
+        dataAgendamento: formData.date, // formato: "2024-11-25"
+        horario: formData.time, // formato: "14:00"
+        preferencia: 'whatsapp' as const
+      };
+
+      console.log('Enviando agendamento:', payload);
+      
+      const response = await api.createAgendamento(payload);
+      
+      console.log('Agendamento criado com sucesso:', response);
+
+      setStep('success');
+      setTimeout(() => {
+        window.open(`https://wa.me/5581991497521?text=Olá!%20Acabei%20de%20agendar%20uma%20consultoria%20pelo%20site.`, '_blank');
+      }, 2000);
+    } catch (error: any) {
+      console.error('Erro completo ao criar agendamento:', error);
+      const errorMsg = error?.message || 'Erro ao agendar. Por favor, tente novamente.';
+      setErrorMessage(errorMsg);
+      setStep('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleServiceToggle = (service: string) => {
@@ -119,6 +169,14 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-6">
+                      {/* Error Message */}
+                      {errorMessage && (
+                        <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm flex items-start gap-2">
+                          <X className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                          <span>{errorMessage}</span>
+                        </div>
+                      )}
+
                       {/* Name */}
                       <div>
                         <Label htmlFor="name" className="text-white mb-2 flex items-center gap-2">
@@ -271,24 +329,37 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                       <div className="flex gap-4">
                         <Button
                           type="submit"
-                          className="flex-1 bg-gradient-to-r from-[#535353ff] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.3)] h-12"
+                          disabled={isSubmitting}
+                          className="flex-1 bg-gradient-to-r from-[#535353ff] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.3)] h-12 disabled:opacity-50"
                         >
-                          <Check className="w-5 h-5 mr-2" />
-                          Confirmar Agendamento
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                              Agendando...
+                            </>
+                          ) : (
+                            <>
+                              <Check className="w-5 h-5 mr-2" />
+                              Confirmar Agendamento
+                            </>
+                          )}
                         </Button>
                         <Button
                           type="button"
                           onClick={() => window.open('https://wa.me/5581991497521?text=Olá!%20Gostaria%20de%20agendar%20uma%20consultoria', '_blank')}
                           variant="outline"
                           className="flex-1 border-green-500 text-green-500 hover:bg-green-500 hover:text-white h-12"
+                          disabled={isSubmitting}
                         >
                           Prefiro WhatsApp Direto
                         </Button>
                       </div>
                     </form>
                   </>
-                ) : (
+                ) : step === 'success' ? (
                   <SuccessState onClose={resetAndClose} />
+                ) : (
+                  <ErrorState message={errorMessage} onRetry={() => setStep('form')} />
                 )}
               </motion.div>
             </div>
@@ -332,6 +403,46 @@ function SuccessState({ onClose }: { onClose: () => void }) {
         </Button>
         <Button onClick={onClose} variant="outline" className="border-white/20 text-white">
           Fechar
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
+function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="text-center py-12"
+    >
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+        className="w-24 h-24 mx-auto mb-6 rounded-full bg-red-500/20 flex items-center justify-center"
+      >
+        <X className="w-12 h-12 text-red-500" />
+      </motion.div>
+
+      <h2 className="text-3xl text-white mb-4">Oops! Algo deu errado</h2>
+      <p className="text-gray-400 mb-8">
+        {message || 'Não foi possível concluir o agendamento. Por favor, tente novamente.'}
+      </p>
+
+      <div className="flex flex-col gap-3">
+        <Button
+          onClick={onRetry}
+          className="bg-gradient-to-r from-[#535353ff] to-[#0d0d0d]"
+        >
+          Tentar Novamente
+        </Button>
+        <Button
+          onClick={() => window.open('https://wa.me/5581991497521?text=Olá!%20Gostaria%20de%20agendar%20uma%20consultoria', '_blank')}
+          variant="outline"
+          className="border-green-500 text-green-500 hover:bg-green-500 hover:text-white"
+        >
+          Continuar via WhatsApp
         </Button>
       </div>
     </motion.div>

@@ -1,8 +1,9 @@
 import { motion } from 'motion/react';
-import { Instagram, Facebook, Linkedin, Mail } from 'lucide-react';
+import { Instagram, Facebook, Linkedin, Mail, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useState } from 'react';
+import { api } from '../services/api';
 
 const serviceLinks = [
   'Gestão de Redes Sociais',
@@ -25,13 +26,31 @@ const companyLinks = [
 export function Footer() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Newsletter subscription:', email);
-    setIsSubscribed(true);
-    setEmail('');
-    setTimeout(() => setIsSubscribed(false), 3000);
+    setIsSubmitting(true);
+
+    try {
+      // Criar lead com origem newsletter
+      await api.createLead({
+        nome: 'Newsletter Subscriber',
+        email: email,
+        origem: 'newsletter',
+        mensagem: 'Inscrito na newsletter',
+        servicos: ['Newsletter']
+      });
+
+      setIsSubscribed(true);
+      setEmail('');
+      setTimeout(() => setIsSubscribed(false), 3000);
+    } catch (error) {
+      console.error('Erro ao inscrever na newsletter:', error);
+      alert('Erro ao se inscrever. Por favor, tente novamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -171,9 +190,17 @@ export function Footer() {
                 />
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#535353ff] to-[#fff] hover:shadow-[0_0_20px_rgba(255,250,250,0.4)]"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#535353ff] to-[#fff] hover:shadow-[0_0_20px_rgba(255,250,250,0.4)] disabled:opacity-50"
                 >
-                  Inscrever
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Inscrevendo...
+                    </>
+                  ) : (
+                    'Inscrever'
+                  )}
                 </Button>
               </form>
             ) : (

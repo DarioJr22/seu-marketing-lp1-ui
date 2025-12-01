@@ -1,79 +1,45 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
-import { Play, Instagram, ExternalLink } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Play, Instagram, ExternalLink, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { AuroraText } from './ui/aurora-text';
-
-interface Portfolio {
-  type: 'image' | 'video';
-  category: string;
-  title: string;
-  description: string;
-  client: string;
-  results: string;
-  url?: string;
-}
-
-
-const portfolioItems:Portfolio[] = [
-  {
-    type: 'image',
-    category: 'Social Media',
-    title: 'Gestão de Instagram - Beleza & Estilo',
-    description: 'Feed harmonizado que aumentou engajamento em 350%',
-    client: 'Beleza & Estilo',
-    results: '+350% engajamento'
-  },
-  {
-    type: 'video',
-    category: 'Produção Audiovisual',
-    title: 'Vídeo Comercial - TechStart Digital',
-    description: 'Campanha institucional de lançamento de produto',
-    client: 'TechStart Digital',
-    results: '2M+ visualizações'
-  },
-  {
-    type: 'image',
-    category: 'Design',
-    title: 'Identidade Visual - AutoPeças Premium',
-    description: 'Redesign completo de marca e materiais',
-    client: 'AutoPeças Premium',
-    results: 'Reconhecimento +200%'
-  },
-  {
-    type: 'image',
-    category: 'Tráfego Pago',
-    title: 'Campanha Google Ads - EcoLife Store',
-    description: 'Anúncios que geraram ROI de 400%',
-    client: 'EcoLife Store',
-    results: 'ROI 400%'
-  },
-  {
-    type: 'video',
-    category: 'Produção Audiovisual',
-    title: 'Reels Virais - Construtora Horizonte',
-    description: 'Série de vídeos que viralizaram no Instagram',
-    client: 'Construtora Horizonte',
-    results: '500K+ alcance'
-  },
-  {
-    type: 'image',
-    category: 'Social Media',
-    title: 'Stories Interativos - Inovare Soluções',
-    description: 'Estratégia de stories que triplicou conversões',
-    client: 'Inovare Soluções',
-    results: '+300% conversões'
-  }
-];
-
-const categories = ['Todos', 'Social Media', 'Design', 'Produção Audiovisual', 'Tráfego Pago'];
+import { api } from '../services/api';
+import { PortfolioItemDTO } from '../types/admin';
 
 export function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState('Todos');
+  const [portfolioItems, setPortfolioItems] = useState<PortfolioItemDTO[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Extract unique categories from portfolio items
+  const categories = ['Todos', ...Array.from(new Set(portfolioItems.map(item => item.categoria)))];
+
+  useEffect(() => {
+    loadPortfolioItems();
+  }, []);
+
+  const loadPortfolioItems = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const items = await api.getPortfolioItems();
+      // Filter only active items and sort by destaque first
+      const activeItems = items
+        .filter(item => item.ativo)
+        .sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0));
+      setPortfolioItems(activeItems);
+    } catch (err) {
+      setError('Erro ao carregar portfolio. Por favor, tente novamente.');
+      console.error('Erro ao carregar portfolio:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredItems = activeCategory === 'Todos' 
     ? portfolioItems 
-    : portfolioItems.filter(item => item.category === activeCategory);
+    : portfolioItems.filter(item => item.categoria === activeCategory);
 
   return (
     <section id="portfolio" className="py-24 px-6 bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
@@ -94,29 +60,58 @@ export function PortfolioSection() {
           </p>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 rounded-full transition-all cursor-pointer ${
-                  activeCategory === category
-                    ? 'bg-gradient-to-r from-[#000000] to-[#ffffff] text-white shadow-[0_0_20px_rgba(255,250,250,0.5)]'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+          {!loading && !error && (
+            <div className="flex flex-wrap gap-3 justify-center">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-6 py-2 rounded-full transition-all cursor-pointer ${
+                    activeCategory === category
+                      ? 'bg-gradient-to-r from-[#000000] to-[#ffffff] text-white shadow-[0_0_20px_rgba(255,250,250,0.5)]'
+                      : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="w-12 h-12 text-white animate-spin mb-4" />
+            <p className="text-gray-400 text-lg">Carregando portfolio...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="flex flex-col items-center justify-center py-20">
+            <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+            <p className="text-red-400 text-lg mb-4">{error}</p>
+            <Button onClick={loadPortfolioItems} variant="outline">
+              Tentar Novamente
+            </Button>
+          </div>
+        )}
+
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item, index) => (
-            <PortfolioCard key={index} item={item} index={index} />
-          ))}
-        </div>
+        {!loading && !error && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, index) => (
+                <PortfolioCard key={item.id} item={item} index={index} />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20">
+                <p className="text-gray-400 text-lg">Nenhum item encontrado nesta categoria.</p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* CTA */}
         <motion.div
@@ -144,14 +139,7 @@ export function PortfolioSection() {
 }
 
 interface PortfolioCardProps {
-  item: {
-    type: string;
-    category: string;
-    title: string;
-    description: string;
-    client: string;
-    results: string;
-  };
+  item: PortfolioItemDTO;
   index: number;
 }
 
@@ -168,30 +156,37 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
       onHoverEnd={() => setIsHovered(false)}
       className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
     >
-      {/* Placeholder Image/Video */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed]/30 via-[#ec4899]/20 to-[#f59e0b]/30">
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 opacity-20" style={{
-          //TODO : substituir cores fixas por variáveis de tema e foros
-          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px),
-                           repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px)`
-        }} />
-        
-        {/* Type Icon */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          {item.type === 'video' ? (
-            <motion.div
-              animate={{ scale: isHovered ? 1.1 : 1 }}
-              transition={{ duration: 0.3 }}
-              className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center"
-            >
-              <Play className="w-10 h-10 text-white fill-white ml-1" />
-            </motion.div>
-          ) : (
-            <div className="text-8xl opacity-20">📸</div>
-          )}
+      {/* Image/Video Background */}
+      {item.imagemCapa ? (
+        <img 
+          src={item.imagemCapa} 
+          alt={item.titulo}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed]/30 via-[#ec4899]/20 to-[#f59e0b]/30">
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-20" style={{
+            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px),
+                             repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(124,58,237,0.5) 2px, rgba(124,58,237,0.5) 3px)`
+          }} />
+          
+          {/* Type Icon */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {item.url ? (
+              <motion.div
+                animate={{ scale: isHovered ? 1.1 : 1 }}
+                transition={{ duration: 0.3 }}
+                className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center"
+              >
+                <Play className="w-10 h-10 text-white fill-white ml-1" />
+              </motion.div>
+            ) : (
+              <div className="text-8xl opacity-20">📸</div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Overlay Info */}
       <motion.div
@@ -200,30 +195,61 @@ function PortfolioCard({ item, index }: PortfolioCardProps) {
         transition={{ duration: 0.3 }}
         className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 flex flex-col justify-end"
       >
-        {/* Category Badge */}
-        <div className="mb-3">
+        {/* Category Badge & Destaque */}
+        <div className="mb-3 flex gap-2 flex-wrap">
           <span className="px-3 py-1 bg-[#fff]/80 backdrop-blur-sm text-black text-xs rounded-full">
-            {item.category}
+            {item.categoria}
           </span>
+          {item.destaque && (
+            <span className="px-3 py-1 bg-yellow-500/80 backdrop-blur-sm text-black text-xs rounded-full font-semibold">
+              ⭐ Destaque
+            </span>
+          )}
         </div>
 
         {/* Title */}
-        <h3 className="text-xl text-white mb-2">
-          {item.title}
+        <h3 className="text-xl text-white mb-2 font-bold">
+          {item.titulo}
         </h3>
 
         {/* Description */}
         <p className="text-gray-300 text-sm mb-3">
-          {item.description}
+          {item.descricao}
         </p>
 
-        {/* Results */}
-        <div className="flex items-center justify-between">
-          <div className="text-[#fff]">
-            {item.results}
+        {/* Client & Results */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-sm text-gray-400">
+            Cliente: {item.cliente}
           </div>
-          <ExternalLink className="w-5 h-5 text-white" />
         </div>
+        
+        <div className="flex items-center justify-between">
+          <div className="text-[#fff] font-semibold">
+            {item.resultado}
+          </div>
+          {item.url && (
+            <a 
+              href={item.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ExternalLink className="w-5 h-5 text-white hover:scale-110 transition-transform" />
+            </a>
+          )}
+        </div>
+
+        {/* Tags */}
+        {item.tags && item.tags.length > 0 && (
+          <div className="flex gap-2 flex-wrap mt-3">
+            {item.tags.map((tag, idx) => (
+              <span key={idx} className="px-2 py-1 bg-white/10 text-white text-xs rounded">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </motion.div>
 
       {/* Border glow on hover */}

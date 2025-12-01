@@ -1,11 +1,12 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import { Phone, Mail, Instagram, MapPin, Send, Clock, Shield, Check } from 'lucide-react';
+import { Phone, Mail, Instagram, MapPin, Send, Clock, Shield, Check, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { AuroraText } from './ui/aurora-text';
+import { api } from '../services/api';
 
 const services = [
   'Gestão de Redes Sociais',
@@ -31,6 +32,7 @@ export function ContactSection() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleServiceToggle = (service: string) => {
     setFormData(prev => ({
@@ -43,19 +45,48 @@ export function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
-    setIsSubmitting(false);
+    // Validação
+    if (!formData.name || !formData.email) {
+      setError('Por favor, preencha nome e email.');
+      return;
+    }
 
-    // Redirect to Instagram after 3 seconds
-    setTimeout(() => {
-      window.open('https://www.instagram.com/seu_marketing01/', '_blank');
-    }, 3000);
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const payload = {
+        nome: formData.name,
+        email: formData.email,
+        telefone: formData.whatsapp || undefined,
+        empresa: formData.company || undefined,
+        mensagem: formData.message || undefined,
+        origem: 'site_contato',
+        servicos: formData.services.length > 0 ? formData.services : ['Consultoria Geral'],
+        orcamentoMin: formData.budget,
+        orcamentoMax: formData.budget
+      };
+
+      console.log('Enviando lead:', payload);
+
+      const response = await api.createLead(payload);
+      
+      console.log('Lead criado com sucesso:', response);
+
+      setIsSubmitted(true);
+
+      // Redirect to Instagram after 3 seconds
+      setTimeout(() => {
+        window.open('https://www.instagram.com/seu_marketing01/', '_blank');
+      }, 3000);
+    } catch (err: any) {
+      console.error('Erro completo ao enviar contato:', err);
+      const errorMsg = err?.message || 'Erro ao enviar formulário. Por favor, tente novamente ou entre em contato via WhatsApp.';
+      setError(errorMsg);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -260,14 +291,25 @@ export function ContactSection() {
                     </div>
                   </div>
 
+                  {/* Error Message */}
+                  {error && (
+                    <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                      <span>{error}</span>
+                    </div>
+                  )}
+
                   {/* Submit Button */}
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-[#0d0d0d] via-[#3c3c3c] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.5)] h-14 text-lg"
+                    className="w-full bg-gradient-to-r from-[#0d0d0d] via-[#3c3c3c] to-[#0d0d0d] hover:shadow-[0_0_30px_rgba(255,250,250,0.5)] h-14 text-lg disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <>Enviando...</>
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Enviando...
+                      </>
                     ) : (
                       <>
                         <Send className="w-5 h-5 mr-2" />
