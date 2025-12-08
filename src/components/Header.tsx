@@ -25,7 +25,6 @@ export function Header({ onOpenScheduleModal }: HeaderProps) {
   const navLinks = [
     { label: 'Serviços', href: '#services' },
     { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Cases', href: '#cases' },
     { label: 'Contato', href: '#contact' }
   ];
 
