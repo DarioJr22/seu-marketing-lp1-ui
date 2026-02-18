@@ -1,13 +1,13 @@
 // ===== Portfolio Types =====
 export interface PortfolioItemDTO {
-  id?: number;
+  id?: string;
   titulo: string;
   slug: string;
   descricao?: string;
   categoria: string;
   cliente?: string;
   imagemCapa?: string;
-  url?: string; // video_url no backend
+  url?: string;
   resultado?: string;
   tags?: string[];
   destaque: boolean;
@@ -33,24 +33,35 @@ export interface CreatePortfolioItemDTO {
 }
 
 export interface UpdatePortfolioItemDTO extends Partial<CreatePortfolioItemDTO> {
-  id: number;
+  id: string;
 }
 
 // ===== Lead Types =====
+export type LeadStatus =
+  | 'novo'
+  | 'contato_realizado'
+  | 'qualificado'
+  | 'proposta_enviada'
+  | 'negociacao'
+  | 'convertido'
+  | 'perdido';
+
 export interface LeadDTO {
-  id?: number;
+  id?: string;
   nome: string;
   email: string;
   telefone?: string;
   empresa?: string;
   mensagem?: string;
-  servicos: string[]; // Obrigatório
+  servicos: string[];
   orcamentoMin?: number;
   orcamentoMax?: number;
   origem: string;
   landingPageId?: number;
-  status?: string;
+  status?: LeadStatus;
   prioridade?: string;
+  observacoes?: string;
+  valorEstimado?: number;
   createdAt?: string;
 }
 
@@ -60,31 +71,39 @@ export interface CreateLeadDTO {
   telefone?: string;
   empresa?: string;
   mensagem?: string;
-  servicos: string[]; // Obrigatório - pelo menos um serviço
+  servicos: string[];
   orcamentoMin?: number;
   orcamentoMax?: number;
   origem: string;
   landingPageId?: number;
   status?: string;
   prioridade?: string;
+  observacoes?: string;
+  valorEstimado?: number;
 }
 
 export interface UpdateLeadDTO extends Partial<CreateLeadDTO> {
-  id: number;
+  id: string;
 }
 
 // ===== Agendamento Types =====
+export type AgendamentoStatus = 'pendente' | 'confirmado' | 'cancelado' | 'realizado';
+
 export interface AgendamentoDTO {
-  id?: number;
+  id?: string;
+  leadId?: string;
   nome: string;
   email: string;
   telefone: string;
   empresa?: string;
-  servico: string;
-  dataHora: string;
-  duracao: number;
+  servicos?: string[];
+  orcamentoMin?: number;
+  orcamentoMax?: number;
+  dataAgendamento?: string;
+  horario?: string;
+  preferencia?: string;
   mensagem?: string;
-  status: 'pendente' | 'confirmado' | 'cancelado' | 'realizado';
+  status: AgendamentoStatus;
   notificado: boolean;
   createdAt?: string;
   updatedAt?: string;
@@ -99,15 +118,47 @@ export interface AgendamentoRequestDTO {
   servicos: string[];
   orcamentoMin?: number;
   orcamentoMax?: number;
-  dataAgendamento: string; // formato: "2024-11-25"
-  horario: string; // formato: "14:00"
+  dataAgendamento: string;
+  horario: string;
   preferencia?: 'whatsapp' | 'email' | 'telefone';
+  leadId?: string;
 }
 
 export interface UpdateAgendamentoDTO extends Partial<AgendamentoRequestDTO> {
-  id: number;
-  status?: 'pendente' | 'confirmado' | 'cancelado' | 'realizado';
+  id: string;
+  status?: AgendamentoStatus;
   notificado?: boolean;
+  leadId?: string;
+}
+
+// ===== Review Types =====
+export interface ReviewDTO {
+  id?: string;
+  nome: string;
+  cargo?: string;
+  empresa?: string;
+  texto: string;
+  nota: number;
+  avatarUrl?: string;
+  ativo: boolean;
+  ordem: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface CreateReviewDTO {
+  nome: string;
+  cargo?: string;
+  empresa?: string;
+  texto: string;
+  nota?: number;
+  avatarUrl?: string;
+  ativo?: boolean;
+  ordem?: number;
+}
+
+export interface UpdateReviewDTO extends Partial<CreateReviewDTO> {
+  id: string;
 }
 
 // ===== Dashboard Stats Types =====

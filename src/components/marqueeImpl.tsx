@@ -1,56 +1,12 @@
 import { cn } from "@/lib/utils"
 import { Marquee } from "./ui/marquee"
 import { motion } from 'motion/react';
-import { url } from "inspector";
-import {
-  ScrollVelocityContainer,
-  ScrollVelocityRow,
-} from "@/components/ui/scroll-based-velocity"
-
-const urlStorage = import.meta.env.VITE_MINIO_ENDPOINT
-const path = 'objects/download?prefix=parciros/'
+import { getStorageUrl } from "@/lib/supabase";
 const reviews = [
-  {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://avatar.vercel.sh/jack",
-  },
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://avatar.vercel.sh/jill",
-  },
-  {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
-  },
-  {
-    name: "Jane",
-    username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
-  },
-  {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
-  },
-  {
-    name: "James",
-    username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
-  },
-]
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 
+];
 
-const firstRow = reviews.slice(0, reviews.length / 2)
-const secondRow = reviews.slice(reviews.length / 2)
-
+const firstRow = reviews
 const ReviewCard = ({
   index
 }: {
@@ -66,7 +22,7 @@ const ReviewCard = ({
       )}
     >
       <div className="flex flex-row items-center gap-2">
-        <img className="rounded-full" width="132" height="232" alt="" src={`${urlStorage}${path}parceiro_${index}.png`} />
+        <img className="rounded-full" width="132" height="232" alt="" src={getStorageUrl('site-assets', `parceiros/parceiro_${index}.png`)} />
       </div>
     </figure>
   )
@@ -83,7 +39,7 @@ export function MarqueeImpl() {
          <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review, index) => (
           <ReviewCard key={review.username} index={index} />
-        )).reverse()}
+        ))}
       </Marquee>
         </motion.div>
 

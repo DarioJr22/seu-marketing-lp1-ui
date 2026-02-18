@@ -7,6 +7,7 @@ import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { AuroraText } from './ui/aurora-text';
 import { api } from '../services/api';
+import { trackLeadSubmit } from '../lib/analytics';
 
 const services = [
   'Gestão de Redes Sociais',
@@ -73,6 +74,7 @@ export function ContactSection() {
       const response = await api.createLead(payload);
       
       console.log('Lead criado com sucesso:', response);
+      trackLeadSubmit('site_contato');
 
       setIsSubmitted(true);
 

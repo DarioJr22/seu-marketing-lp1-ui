@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { api } from '../services/api';
+import { trackAppointmentSubmit } from '../lib/analytics';
 
 interface ScheduleModalProps {
   isOpen: boolean;
@@ -80,9 +81,10 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
 
       console.log('Enviando agendamento:', payload);
       
-      const response = await api.createAgendamento(payload);
+      const response = await api.createAgendamentoWithLead(payload);
       
       console.log('Agendamento criado com sucesso:', response);
+      trackAppointmentSubmit(formData.selectedServices.join(', '));
 
       setStep('success');
       setTimeout(() => {
@@ -272,7 +274,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                       </div>
 
                       {/* Date and Time */}
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="date" className="text-white mb-2 flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-[#535353ff]" />
@@ -285,28 +287,30 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                             value={formData.date}
                             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                             min={new Date().toISOString().split('T')[0]}
-                            className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white"
+                            className="bg-[#0a0a0a] border-white/10 focus:border-[#535353ff] text-white [color-scheme:dark]"
                           />
                         </div>
                         <div>
-                          <Label htmlFor="time" className="text-white mb-2 flex items-center gap-2">
+                          <Label className="text-white mb-2 flex items-center gap-2">
                             <Clock className="w-4 h-4 text-[#535353ff]" />
                             Horário *
                           </Label>
-                          <select
-                            id="time"
-                            required
-                            value={formData.time}
-                            onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                            className="w-full h-10 px-3 rounded-md bg-[#0a0a0a] border border-white/10 focus:border-[#535353ff] text-white outline-none"
-                          >
-                            <option value="">Selecione</option>
+                          <div className="grid grid-cols-4 gap-1.5">
                             {timeSlots.map((slot) => (
-                              <option key={slot} value={slot}>
+                              <button
+                                key={slot}
+                                type="button"
+                                onClick={() => setFormData({ ...formData, time: slot })}
+                                className={`text-sm py-2 px-2 rounded-lg border transition-all ${
+                                  formData.time === slot
+                                    ? 'bg-[#535353ff]/30 border-[#535353ff] text-white shadow-md'
+                                    : 'bg-[#0a0a0a] border-white/10 text-gray-400 hover:border-[#535353ff]/50 hover:text-white'
+                                }`}
+                              >
                                 {slot}
-                              </option>
+                              </button>
                             ))}
-                          </select>
+                          </div>
                         </div>
                       </div>
 

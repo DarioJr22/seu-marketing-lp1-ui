@@ -5,10 +5,10 @@ import { Button } from './ui/button';
 import { VideoText } from "@/components/ui/video-text";
 import {MarqueeImpl } from '@/components/marqueeImpl';
 import { Particles } from './ui/particles';
+import { getStorageUrl } from '@/lib/supabase';
 
 interface HeroSectionProps {
-  onOpenScheduleModal: () => void,
-  urlStorage?: string;
+  onOpenScheduleModal: () => void;
 }
 
 const rotatingPhrases = [
@@ -19,7 +19,9 @@ const rotatingPhrases = [
   "merece uma presença forte?"
 ];
 
-export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProps) {
+const heroVideoUrl = getStorageUrl('site-assets', 'video/video_herosec.webm');
+
+export function HeroSection({ onOpenScheduleModal }: HeroSectionProps) {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -88,7 +90,7 @@ export function HeroSection({ onOpenScheduleModal, urlStorage }: HeroSectionProp
             transition={{ duration: 1, type: "spring" }}
             className="mb-8">
             <div className="relative h-[150px] w-full overflow-hidden">
-              <VideoText src={`${urlStorage}objects/download?prefix=video/video_herosec.webm`}>
+              <VideoText src={heroVideoUrl}>
                 SEU MARKETING
               </VideoText>
             </div>

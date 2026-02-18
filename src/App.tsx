@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Preloader } from './components/Preloader';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -15,9 +16,19 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ScheduleModal } from './components/ScheduleModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ScrollProgress } from "@/components/ui/scroll-progress"
+import { ProtectedRoute } from '@/admin/components/ProtectedRoute';
+
+// Lazy load admin pages
+const AdminLayout = lazy(() => import('@/admin/components/Layout'));
+const AdminLogin = lazy(() => import('@/admin/pages/Login'));
+const AdminDashboard = lazy(() => import('@/admin/pages/Dashboard'));
+const AdminLeadsKanban = lazy(() => import('@/admin/pages/LeadsKanban'));
+const AdminAppointments = lazy(() => import('@/admin/pages/Appointments'));
+const AdminPortfolio = lazy(() => import('@/admin/pages/Portfolio'));
+const AdminReviews = lazy(() => import('@/admin/pages/Reviews'));
 
 
 ///
@@ -32,12 +43,61 @@ import { ScrollProgress } from "@/components/ui/scroll-progress"
 
 */
 
+// Admin loading fallback
+function AdminLoading() {
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+    </div>
+  );
+}
+
 export default function App() {
+  return (
+    <Routes>
+      {/* Landing Page */}
+      <Route path="/" element={<LandingPage />} />
+
+      {/* Admin Routes */}
+      <Route
+        path="/admin/login"
+        element={
+          <Suspense fallback={<AdminLoading />}>
+            <AdminLogin />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <Suspense fallback={<AdminLoading />}>
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          </Suspense>
+        }
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="leads" element={<AdminLeadsKanban />} />
+        <Route path="appointments" element={<AdminAppointments />} />
+        <Route path="portfolio" element={<AdminPortfolio />} />
+        <Route path="reviews" element={<AdminReviews />} />
+      </Route>
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+// ===== Landing Page (conteúdo original) =====
+
+function LandingPage() {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [easterEggActivated, setEasterEggActivated] = useState(false);
   const [typedSequence, setTypedSequence] = useState('');
-  const [url, setUrl] = useState(import.meta.env.VITE_MINIO_ENDPOINT );
+
 
   // Back to top button visibility
   useEffect(() => {
@@ -115,7 +175,7 @@ export default function App() {
       <Header onOpenScheduleModal={() => setIsScheduleModalOpen(true)} />
       
       <main>
-        <HeroSection onOpenScheduleModal={() => setIsScheduleModalOpen(true)} urlStorage={url} />
+        <HeroSection onOpenScheduleModal={() => setIsScheduleModalOpen(true)} />
         <ProblemsSection />
         <ServicesSection />
         <PortfolioSection />

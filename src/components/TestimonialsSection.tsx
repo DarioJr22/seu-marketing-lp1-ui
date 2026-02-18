@@ -1,67 +1,48 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Star, Quote } from 'lucide-react';
 import { AuroraText } from './ui/aurora-text';
-import { Meteors } from './ui/meteors';
+import { api } from '@/services/api';
+import type { ReviewDTO } from '@/types/admin';
 
-const testimonials = [
-  {
-    name: "Maria Silva",
-    role: "CEO",
-    company: "TechStart Digital",
-    text: "A SEU MARKETING transformou nossa presença digital. Em 3 meses triplicamos nosso faturamento online!",
-    rating: 5,
-    image: "MS"
-  },
-  {
-    name: "João Santos",
-    role: "Diretor de Marketing",
-    company: "Inovare Soluções",
-    text: "Finalmente encontramos uma agência que entende de resultados, não só de likes.",
-    rating: 5,
-    image: "JS"
-  },
-  {
-    name: "Ana Costa",
-    role: "Proprietária",
-    company: "Beleza & Estilo",
-    text: "O ROI das campanhas superou todas as expectativas. Melhor investimento que fizemos!",
-    rating: 5,
-    image: "AC"
-  },
-  {
-    name: "Pedro Oliveira",
-    role: "Gerente Comercial",
-    company: "AutoPeças Premium",
-    text: "Profissionais sérios e comprometidos com resultados. Aumentamos 250% em leads qualificados.",
-    rating: 5,
-    image: "PO"
-  },
-  {
-    name: "Juliana Ferreira",
-    role: "Fundadora",
-    company: "EcoLife Store",
-    text: "Atendimento humanizado e estratégias que realmente funcionam. Nosso Instagram cresceu 400%!",
-    rating: 5,
-    image: "JF"
-  },
-  {
-    name: "Carlos Mendes",
-    role: "CEO",
-    company: "Construtora Horizonte",
-    text: "Transparência total nos relatórios e resultados acima do prometido. Equipe excepcional!",
-    rating: 5,
-    image: "CM"
-  }
-];
-
-const stats = [
-  { number: "500+", label: "Empresas Atendidas", icon: "🏆" },
-  { number: "+200%", label: "ROI Médio dos Clientes", icon: "📈" },
-  { number: "98%", label: "Taxa de Satisfação", icon: "⭐" },
-  { number: "5 Anos", label: "Experiência no Mercado", icon: "🎯" }
+// Fallback hardcoded para quando o DB não retorna dados
+const fallbackTestimonials = [
+  { name: "Maria Silva", role: "CEO", company: "TechStart Digital", text: "A SEU MARKETING transformou nossa presença digital. Em 3 meses triplicamos nosso faturamento online!", rating: 5 },
+  { name: "João Santos", role: "Diretor de Marketing", company: "Inovare Soluções", text: "Finalmente encontramos uma agência que entende de resultados, não só de likes.", rating: 5 },
+  { name: "Ana Costa", role: "Proprietária", company: "Beleza & Estilo", text: "O ROI das campanhas superou todas as expectativas. Melhor investimento que fizemos!", rating: 5 },
+  { name: "Pedro Oliveira", role: "Gerente Comercial", company: "AutoPeças Premium", text: "Profissionais sérios e comprometidos com resultados. Aumentamos 250% em leads qualificados.", rating: 5 },
+  { name: "Juliana Ferreira", role: "Fundadora", company: "EcoLife Store", text: "Atendimento humanizado e estratégias que realmente funcionam. Nosso Instagram cresceu 400%!", rating: 5 },
+  { name: "Carlos Mendes", role: "CEO", company: "Construtora Horizonte", text: "Transparência total nos relatórios e resultados acima do prometido. Equipe excepcional!", rating: 5 },
 ];
 
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<{ name: string; role: string; company: string; text: string; rating: number }[]>(fallbackTestimonials);
+
+  useEffect(() => {
+    api.getActiveReviews().then((reviews) => {
+      if (reviews.length > 0) {
+        setTestimonials(
+          reviews.map((r) => ({
+            name: r.nome,
+            role: r.cargo || '',
+            company: r.empresa || '',
+            text: r.texto,
+            rating: r.nota,
+          }))
+        );
+      }
+    }).catch(() => {
+      // Keep fallback on error
+    });
+  }, []);
+
+  const stats = [
+    { number: "500+", label: "Empresas Atendidas", icon: "🏆" },
+    { number: "+200%", label: "ROI Médio dos Clientes", icon: "📈" },
+    { number: "98%", label: "Taxa de Satisfação", icon: "⭐" },
+    { number: "5 Anos", label: "Experiência no Mercado", icon: "🎯" }
+  ];
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -129,7 +110,6 @@ interface TestimonialCardProps {
     company: string;
     text: string;
     rating: number;
-    image: string;
   };
   index: number;
 }
@@ -169,8 +149,8 @@ function TestimonialCard({ testimonial, index }: TestimonialCardProps) {
 
       {/* Author */}
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] flex items-center justify-center text-white">
-          {testimonial.image}
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] flex items-center justify-center text-white font-bold">
+          {testimonial.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
         </div>
         <div>
           <div className="text-white">{testimonial.name}</div>
